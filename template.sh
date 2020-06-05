@@ -4,15 +4,15 @@ name=$1
 cat << EOF
 #!/bin/sh
 #SBATCH -J $name
-#SBATCH --comment "__enter_comment_here__"
+#SBATCH --comment "$name"
 
 # Partition and Time Span
 #SBATCH --partition batch
 #SBATCH --time 5-23:0:0
 
 # Output and Error File
-#SBATCH --output results/log_%A.out
-#SBATCH --error results/log_%A.err 
+#SBATCH --output results/log_%A_$name.out
+#SBATCH --error results/log_%A_$name.err 
 
 #SBATCH --mem 6G
 #SBATCH --nodes 1
