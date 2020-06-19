@@ -218,7 +218,7 @@ else
 fi
 
 # Create a folder to copy contents back to
-mkdir -p ./results
+# mkdir -p ./results
 
 # Create the main script
 eval 'cat << EOF
