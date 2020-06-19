@@ -137,10 +137,10 @@ if [ "$cp_data" != "" ]
 then 
     # Append the base directory, the data, and the dataset
     #     /tmp/user/data/dataset
-    data_dir=${basedir%*/}/data/${cp_data}
+    data_dir=${basedir%*/}/data/
 
     # Create a copy of dataset without overwriting files 
-    cp_data_cmd="cp -rn /home/nshu/data/${cp_data} ${data_dir}"
+    cp_data_cmd="rsync --ignore-existing -tvrP /home/nshu/data/${cp_data} ${data_dir}"
 fi 
 
 
@@ -275,8 +275,8 @@ then
     cat ${name}.sh
 fi 
 
-rm ${name}.sh
-# sbatch ${name}.sh
+
+sbatch ${name}.sh
 
 # Example:
 # bash create_and_run.sh -f py.py -e "~/envs/speech/" --copy-data dcase --dep /home/nshu/mci /home/nshu/dataset -d 'tests' -v
