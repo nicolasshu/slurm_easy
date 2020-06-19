@@ -1,4 +1,78 @@
-# Version 2
+# Version 3
+
+## Usage
+
+### Example 1: Base usage
+
+```bash
+$ bash create_and_run.sh -f example.py
+```
+
+### Example 2: Setting a specific testing directory
+
+```
+$ bash create_and_run.sh -f example.py --dir my_test
+```
+
+### Example 3: Copying dataset
+
+```bash
+$ bash create_and_run.sh -f example.py --copy-data dcase2018
+```
+
+### Example 4: Using your email
+
+```bash
+$ bash create_and_run.sh -f example.py --email user@emory.edu --mail-type ALL
+```
+
+### Example 5: Setting maximum time
+
+```bash
+$ bash create_and_run.sh -f example.py -t 1:00:00
+```
+
+### Example 6: Show the `example.sh` 
+
+```bash
+$ bash create_and_run.sh -f example.py -v
+```
+
+### Example 7: Copying a dataset and setting a test directory
+
+```bash
+$ bash create_and_run.sh -f example.py --copy-data dcase2018 -d dcase
+```
+
+### Example 8: Copy data, set test dir, and *Use a Specific Virtual Environment*
+
+```bash
+$ bash create_and_run.sh -f example.py --copy-data dcase2018 -d dcase --env /home/nshu/envs/speech 
+```
+
+### Example 9: Copy data, set test dir, use venv, and *Copy Dependencies*
+
+```bash
+$ bash create_and_run.sh -f example.py --copy-data dcase2018 -d dcase --env /home/nshu/envs/speech --dep ./mci ./dataset_loaders
+```
+
+### Example 10: Copy data, set test dir, use venv, copy depend., and *Create Symbolic Links in the test directory*
+
+```bash
+$ bash create_and_run.sh -f example.py --copy-data dcase2018 -d dcase --env /home/nshu/envs/speech --dep ./mci ./dataset_loaders --ln ../dataset_loaders/audioloaders ../mci/net
+```
+
+### Example 10: Copy data, set test dir, use venv, copy depend., and create symlinks, and *be Verbose*
+
+```bash
+$ bash create_and_run.sh -f example.py --copy-data dcase2018 -d dcase --env /home/nshu/envs/speech --dep ./mci ./dataset_loaders --ln ../dataset_loaders/audioloaders ../mci/net -v 
+```
+
+
+
+
+
+
 
 ## Arguments
 
