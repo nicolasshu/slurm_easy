@@ -23,7 +23,7 @@ ln_cmd=""
 # Parse all of the arguments
 while [ ! $# -eq 0 ]
 do
-    case "$1" in 
+    case "$1" in
         --help | -h)
             echo "HELP GUIDE"
             echo " "
@@ -76,9 +76,9 @@ do
             i=1
             # Iterate through dependencies and put them in an array
             for var in "${@:2}"
-            do 
+            do
                 if [ ${var:0:1} = "-" ]
-                then 
+                then
                     break
                 fi
                 # Append the dependency to the array deps
@@ -106,16 +106,16 @@ do
         --ln)
             # Iterate through symbolic links and put them in an array
             for var in "${@:2}"
-            do 
+            do
                 if [ ${var:0:1} = "-" ]
-                then 
+                then
                     break
                 fi
                 # Append the symbolic links to the array lns
                 lns+=("$var")
             done
             ;;
-            
+
         --time | -t)
             time=$2
             ;;
@@ -134,14 +134,14 @@ testdir="${basedir%*/}/${dir}"
 # CREATE COPYING COMMAND FOR DATASET
 #     -n for skipping existing files
 if [ "$cp_data" != "" ]
-then 
+then
     # Append the base directory, the data, and the dataset
     #     /tmp/user/data/dataset
     data_dir=${basedir%*/}/data/
 
-    # Create a copy of dataset without overwriting files 
+    # Create a copy of dataset without overwriting files
     cp_data_cmd="rsync --ignore-existing -tvrP /home/nshu/data/${cp_data} ${data_dir}"
-fi 
+fi
 
 
 # THROW ERROR IF NO INPUT FILE IS PASSED
@@ -163,9 +163,9 @@ fi
 
 # DEPENDENCIES (OPTIONAL)
 if [ ${#deps[@]} -eq 0 ]
-then 
+then
     echo "Dependencies:      None"
-else 
+else
     echo "Dependencies(${#deps[@]}):   ${deps[@]}"
 
     # With the array of dependencies, for each dependency
@@ -174,7 +174,7 @@ else
     #     cp -rn /path/to/dep2/ /tmp/user/
     #     cp -rn /path/to/dep3/ /tmp/user/
     for dep in "${deps[@]}"
-    do 
+    do
         var_cmd="cp -rn ${dep} ${basedir}"
         dep_cmd="${dep_cmd}${var_cmd}
 "
@@ -183,13 +183,13 @@ fi
 
 # SYMBOLIC LINKS (OPTIONAL)
 if [ ${#lns[@]} -eq 0 ]
-then 
+then
     echo "Symbolic Links:      None"
-else 
+else
     echo "Symbolic Links(${#lns[@]}):   ${lns[@]}"
 
     for ln in "${lns[@]}"
-    do 
+    do
         var_cmd="ln -s ${ln}"
         ln_cmd="${ln_cmd}${var_cmd}
 "
@@ -205,12 +205,12 @@ fi
 
 # ENVIRONMENT (OPTIONAL)
 if [ "$env" = "" ]
-then 
+then
     echo "Environment:       None selected"
 else
     echo "Environment:       ${env}"
 
-    # Establish the activate path 
+    # Establish the activate path
     activate_path=${env%*/}/bin/activate
 
     # Write command to activate path
@@ -218,7 +218,7 @@ else
 fi
 
 # Create a folder to copy contents back to
-# mkdir -p ./results
+mkdir -p ~/results
 
 # Create the main script
 eval 'cat << EOF
@@ -228,8 +228,8 @@ eval 'cat << EOF
 #SBATCH --time ${time}
 
 # Output and Error Files
-#SBATCH --output results/%A_$name.out
-#SBATCH --error results/%A_$name.err
+#SBATCH --output ~/results/%A_$name.out
+#SBATCH --error ~/results/%A_$name.err
 
 #SBATCH --mem 6G
 #SBATCH --nodes 1
@@ -271,13 +271,14 @@ python ${file}
 EOF' > ${name}.sh
 
 if $verbose
-then 
+then
     cat ${name}.sh
-fi 
+fi
 
 
 sbatch ${name}.sh
 
+rm ${name}.sh
 # Example:
 # bash create_and_run.sh -f py.py -e "~/envs/speech/" --copy-data dcase --dep /home/nshu/mci /home/nshu/dataset -d 'tests' -v
 # bash create_and_run.sh -f py.py -e "~/envs/speech/" --copy-data dcase --dep /home/nshu/mci /home/nshu/dataset -d 'tests' --ln ../dataset_loaders/audioloaders ../data -v
