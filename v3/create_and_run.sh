@@ -278,6 +278,7 @@ fi
 
 sbatch ${name}.sh
 
+date
 rm ${name}.sh
 # Example:
 # bash create_and_run.sh -f py.py -e "~/envs/speech/" --copy-data dcase --dep /home/nshu/mci /home/nshu/dataset -d 'tests' -v
