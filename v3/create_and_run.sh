@@ -228,8 +228,7 @@ eval 'cat << EOF
 #SBATCH --time ${time}
 
 # Output and Error Files
-#SBATCH --output ~/results/%A_$name.out
-#SBATCH --error ~/results/%A_$name.err
+#SBATCH --output /home/nshu/results/%A_$name.out
 
 #SBATCH --mem 6G
 #SBATCH --nodes 1
